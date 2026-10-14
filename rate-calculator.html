@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Freelance Hourly Rate Calculator — free, private, no signup</title>
+<meta name="description" content="Work out the hourly and project rate you need to hit your income goal after taxes, expenses, vacation and unbillable time. Runs in your browser; nothing is sent anywhere.">
+<style>
+body{font:16px/1.5 system-ui,sans-serif;max-width:680px;margin:2rem auto;padding:0 1rem;color:#1a1a1a}
+h1{font-size:1.6rem}label{display:block;margin:.8rem 0 .2rem;font-weight:600}
+input{width:100%;padding:.5rem;font-size:1rem;box-sizing:border-box;border:1px solid #bbb;border-radius:6px}
+.out{background:#f3f7ff;border:1px solid #c9d9ff;border-radius:8px;padding:1rem;margin-top:1.5rem}
+.big{font-size:2rem;font-weight:700}small{color:#555}table{width:100%;border-collapse:collapse;margin-top:.5rem}td{padding:.25rem 0}
+.cta{margin-top:2rem;padding:1rem;border:1px dashed #999;border-radius:8px}
+</style></head><body>
+<h1>Freelance Hourly Rate Calculator</h1>
+<p>Enter your goals. Everything is calculated locally in your browser.</p>
+<label>Desired yearly take-home income (after tax)</label><input id="net" type="number" value="60000" min="0">
+<label>Yearly business expenses (software, insurance, equipment)</label><input id="exp" type="number" value="4000" min="0">
+<label>Estimated tax rate on profit (%)</label><input id="tax" type="number" value="25" min="0" max="80">
+<label>Weeks off per year (vacation, holidays, sick)</label><input id="off" type="number" value="6" min="0" max="52">
+<label>Working hours per week</label><input id="hrs" type="number" value="40" min="1" max="100">
+<label>Share of working time that is billable (%)</label><input id="bill" type="number" value="60" min="1" max="100">
+<label>Profit margin buffer (%)</label><input id="buf" type="number" value="10" min="0" max="100">
+<div class="out" id="out"></div>
+<p><small>An estimate, not financial or tax advice. Check local tax rules.</small></p>
+<div class="cta" id="cta" hidden></div>
+<script>
+const $=id=>document.getElementById(id), v=id=>parseFloat($(id).value)||0;
+function calc(){
+ const tax=Math.min(v('tax'),80)/100, gross=(v('net')/(1-tax)+v('exp'))*(1+v('buf')/100);
+ const weeks=Math.max(52-v('off'),1), billable=weeks*v('hrs')*Math.min(Math.max(v('bill'),1),100)/100;
+ const rate=gross/billable, f=n=>n.toLocaleString(undefined,{maximumFractionDigits:0});
+ $('out').innerHTML='<div>You should charge at least</div><div class="big">'+rate.toFixed(2)+' / hour</div>'+
+ '<table><tr><td>Revenue needed per year</td><td>'+f(gross)+'</td></tr>'+
+ '<tr><td>Billable hours per year</td><td>'+f(billable)+'</td></tr>'+
+ '<tr><td>Day rate (8h)</td><td>'+f(rate*8)+'</td></tr>'+
+ '<tr><td>10-hour project</td><td>'+f(rate*10)+'</td></tr>'+
+ '<tr><td>40-hour project</td><td>'+f(rate*40)+'</td></tr></table>';
+}
+document.querySelectorAll('input').forEach(i=>i.addEventListener('input',calc));calc();
+// optional link to the kit, set KIT_URL once a listing exists
+const KIT_URL='';
+if(KIT_URL){$('cta').hidden=false;$('cta').innerHTML='Need the paperwork too? <a href="'+KIT_URL+'">Freelancer Starter Kit</a>: proposal, contract, invoice, client scripts.';}
+</script></body></html>
