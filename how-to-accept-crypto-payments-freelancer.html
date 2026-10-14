@@ -1,0 +1,30 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>How Freelancers Can Accept Crypto Payments (USDT/TRC20 Guide)</title><meta name="description" content="A practical guide to accepting USDT crypto payments as a freelancer, for when PayPal or Stripe won't pay out to your country. Steps, risks, and free tools."><link rel="stylesheet" href="style.css"><script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "How Freelancers Can Accept Crypto Payments", "description": "A practical guide to accepting USDT crypto payments as a freelancer, for when PayPal or Stripe won't pay out to your country.", "author": {"@type": "Person", "name": "kleogeos"}, "publisher": {"@type": "Organization", "name": "Freelancer Toolbox"}, "datePublished": "2026-10-14", "mainEntityOfPage": "https://kleogeos.github.io/freelancer-tools/how-to-accept-crypto-payments-freelancer.html"}</script></head><body>
+<nav><a href="index.html">Home</a><a href="invoice.html">Invoice generator</a><a href="kit.html">Starter Kit</a></nav>
+<h1>How Freelancers Can Accept Crypto Payments</h1>
+<p>Most invoicing advice assumes PayPal or Stripe just works. They don't for everyone — both routinely refuse to pay out to certain countries, freeze accounts without much explanation, and take a cut on top. Crypto is a practical fallback: no processor account to get approved for, near-zero fees, and it settles in seconds instead of days.</p>
+
+<h2>Why USDT on TRC20</h2>
+<p>USDT (Tether) is a stablecoin pegged to the US dollar, so you're not exposed to price swings the way you would be holding raw Bitcoin. TRC20 is USDT issued on the Tron network — transaction fees are usually a few cents, versus several dollars on Ethereum (ERC20). For a freelance invoice, that difference matters.</p>
+
+<h2>Steps to set this up</h2>
+<ol>
+<li>Get a Tron-compatible wallet (most multi-chain wallets support TRC20 — check before you commit).</li>
+<li>Share your wallet address with the client, ideally as a QR code so they can scan it from their wallet app instead of copy-pasting a long string.</li>
+<li>State the amount and due date clearly in your invoice, same as you would for a bank transfer.</li>
+<li>Confirm the payment landed by checking the public blockchain explorer for your address — no bank statement needed, the ledger is public.</li>
+</ol>
+
+<h2>Risks to know about</h2>
+<ul>
+<li><b>Wrong network.</b> Sending USDT on the wrong chain (e.g. ERC20 to a TRC20-only address) can lose funds. Confirm the network with your client before they send.</li>
+<li><b>Irreversible.</b> Unlike a card chargeback, a confirmed crypto transfer can't be undone. Get client agreement in writing before relying on this for large invoices.</li>
+<li><b>Client unfamiliarity.</b> Not every client has a crypto wallet ready. Offer it as one option, not the only one, until you know your client base.</li>
+</ul>
+
+<h2>Checking payments without a dashboard</h2>
+<p>You don't need a hosted payment processor to know if you got paid — TRC20 transfers are on a public ledger. <a href="https://github.com/kleogeos/crypto-pay-cli">crypto-pay-cli</a> is a free, open-source command-line tool that checks incoming USDT transfers to your address and generates a receive QR code, using the public TronGrid API directly. No account, no API key.</p>
+<pre>pip install git+https://github.com/kleogeos/crypto-pay-cli
+crypto-pay check YOUR_ADDRESS --min 15 --since 2026-10-14</pre>
+
+<div class="box">Free tools: <a href="invoice.html">invoice generator</a> · <a href="rate-calculator.html">hourly rate calculator</a> · <a href="https://github.com/kleogeos/crypto-pay-cli">crypto-pay-cli</a>. Paperwork bundle: <a href="kit.html">Freelancer Starter Kit</a> (payable by crypto).</div>
+<p><small>General information, not financial or tax advice. Check your local tax treatment of crypto income before relying on it.</small></p></body></html>
