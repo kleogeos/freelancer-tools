@@ -1,0 +1,70 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Free Crypto Invoice Generator (USDT/BTC) — no signup, runs in your browser</title>
+<meta name="description" content="Create a PDF invoice with a crypto payment QR code built in. Free, no signup, nothing uploaded — everything stays in your browser.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Free Crypto Invoice Generator (USDT/BTC)">
+<meta property="og:description" content="Create a PDF invoice with a crypto payment QR code built in. Free, no signup, nothing uploaded.">
+<meta property="og:url" content="https://kleogeos.github.io/freelancer-tools/crypto-invoice-generator.html">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Free Crypto Invoice Generator (USDT/BTC)">
+<meta name="twitter:description" content="Create a PDF invoice with a crypto payment QR code built in.">
+<style>
+body{font:15px system-ui,sans-serif;max-width:860px;margin:0 auto;padding:16px;color:#222}
+h1{font-size:22px}label{display:block;font-size:12px;color:#555;margin-top:8px}
+input,textarea,select{width:100%;padding:6px;box-sizing:border-box;border:1px solid #ccc;border-radius:4px;font:inherit}
+.row{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+table{width:100%;border-collapse:collapse;margin-top:12px}td,th{padding:4px;border-bottom:1px solid #eee;text-align:left}
+td input{width:100%}.num{width:90px}button{padding:8px 14px;margin:8px 8px 0 0;border:0;border-radius:4px;background:#2455d6;color:#fff;cursor:pointer}
+button.sec{background:#666}.total{text-align:right;font-size:18px;margin-top:10px}
+.promo{margin-top:24px;padding:12px;background:#f4f6fb;border-radius:6px;font-size:13px}
+.qrbox{display:flex;gap:16px;align-items:flex-start;flex-wrap:wrap;margin-top:10px}
+.qrbox img{border:1px solid #e5e5e5;border-radius:6px}
+@media print{.noprint{display:none}body{max-width:none}input,textarea,select{border:0;padding:0}}
+</style><script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "Free Crypto Invoice Generator", "url": "https://kleogeos.github.io/freelancer-tools/crypto-invoice-generator.html", "applicationCategory": "BusinessApplication", "operatingSystem": "Any (runs in browser)", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "description": "Create a PDF invoice with a crypto payment QR code built in. Free, no signup, nothing uploaded: everything stays in your browser."}</script></head><body>
+<nav class="noprint" style="margin-bottom:8px"><a href="index.html">← Freelancer Toolbox</a></nav>
+<h1>Free Crypto Invoice Generator</h1>
+<div class="noprint" style="color:#555">Fill in, then "Print / Save as PDF". The QR code lets your client scan-to-pay from their wallet app. Nothing is uploaded — everything stays in your browser (localStorage).</div>
+<div class="row"><div><label>From (your name / company, address, tax ID)</label><textarea id="from" rows="4"></textarea></div>
+<div><label>Bill to</label><textarea id="to" rows="4"></textarea></div>
+<div><label>Invoice #</label><input id="num" value="2026-001"><label>Issue date</label><input id="date" type="date"><label>Due date</label><input id="due" type="date"></div></div>
+<div class="row"><div><label>Currency symbol</label><input id="cur" value="$"></div><div><label>Tax %</label><input id="tax" type="number" value="0" step="0.1"></div></div>
+<table><thead><tr><th>Description</th><th>Qty</th><th>Rate</th><th>Amount</th><th class="noprint"></th></tr></thead><tbody id="rows"></tbody></table>
+<button class="sec noprint" onclick="addRow()">+ Add line</button>
+<div class="total" id="totals"></div>
+
+<h2 style="font-size:16px;margin-top:20px">Crypto payment details</h2>
+<div class="row">
+<div><label>Network</label><select id="network"><option>USDT (TRC20)</option><option>USDT (ERC20)</option><option>USDT (BEP20)</option><option>USDC (ERC20)</option><option>Bitcoin</option><option>Other</option></select></div>
+<div><label>Wallet address</label><input id="wallet" placeholder="Paste your receiving address"></div>
+</div>
+<div class="qrbox">
+<img id="qr" width="150" height="150" alt="Scan to pay QR code" style="display:none">
+<div style="font-size:13px;color:#555;max-width:380px">
+<p id="qrhint">Enter a wallet address above to generate a scan-to-pay QR code for this invoice.</p>
+<p>Double-check the network with your client before they send — sending on the wrong network can lose funds. See the <a href="how-to-accept-crypto-payments-freelancer.html" target="_blank">guide to accepting crypto payments</a>.</p>
+</div>
+</div>
+
+<label>Payment details / notes</label><textarea id="notes" rows="3" placeholder="Additional payment terms, late fee policy…"></textarea>
+<div class="noprint"><button onclick="window.print()">Print / Save as PDF</button><button class="sec" onclick="reset()">Clear</button></div>
+<div class="promo noprint">Need to check whether the payment actually landed? Free open-source <a href="https://github.com/kleogeos/crypto-pay-cli">crypto-pay-cli</a> checks USDT transfers against the public ledger. Prefer a card/bank invoice instead? Use the <a href="invoice.html">regular invoice generator</a>.</div>
+<script>
+const $=id=>document.getElementById(id),F=['from','to','num','date','due','cur','tax','notes','network','wallet'];
+let rows=[{d:'',q:1,r:0}];
+function load(){try{const s=JSON.parse(localStorage.cinv||'{}');F.forEach(f=>{if(s[f]!=null)$(f).value=s[f]});rows=s.rows||rows}catch(e){}
+ if(!$('date').value)$('date').value=new Date().toISOString().slice(0,10)}
+function save(){const s={rows};F.forEach(f=>s[f]=$(f).value);localStorage.cinv=JSON.stringify(s)}
+function fmt(n){return $('cur').value+n.toFixed(2)}
+function render(){$('rows').innerHTML=rows.map((x,i)=>`<tr><td><input value="${x.d.replace(/"/g,'&quot;')}" oninput="rows[${i}].d=this.value;upd()"></td>
+<td><input class="num" type="number" value="${x.q}" oninput="rows[${i}].q=+this.value;upd()"></td>
+<td><input class="num" type="number" value="${x.r}" step="0.01" oninput="rows[${i}].r=+this.value;upd()"></td>
+<td id="a${i}">${fmt(x.q*x.r)}</td><td class="noprint"><button class="sec" onclick="rows.splice(${i},1);render();upd()">×</button></td></tr>`).join('');upd()}
+function updQr(){const addr=$('wallet').value.trim();const img=$('qr'),hint=$('qrhint');
+ if(addr){const data=encodeURIComponent(addr);img.src='https://api.qrserver.com/v1/create-qr-code/?size=150x150&data='+data;img.style.display='block';hint.textContent='Scan with a '+$('network').value+' wallet to pay this invoice.'}
+ else{img.style.display='none';hint.textContent='Enter a wallet address above to generate a scan-to-pay QR code for this invoice.'}}
+function upd(){let sub=0;rows.forEach((x,i)=>{const a=x.q*x.r;sub+=a;const c=$('a'+i);if(c)c.textContent=fmt(a)});
+ const t=sub*(+$('tax').value||0)/100;$('totals').innerHTML=`Subtotal ${fmt(sub)}<br>Tax ${fmt(t)}<br><b>Total due ${fmt(sub+t)}</b>`;updQr();save()}
+function addRow(){rows.push({d:'',q:1,r:0});render()}
+function reset(){if(confirm('Clear all fields?')){localStorage.removeItem('cinv');location.reload()}}
+F.forEach(f=>$(f).addEventListener('input',upd));load();render();
+</script></body></html>
