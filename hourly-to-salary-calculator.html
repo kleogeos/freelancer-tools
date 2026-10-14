@@ -24,4 +24,4 @@ const $=id=>document.getElementById(id), v=id=>parseFloat($(id).value)||0;
 const f=n=>n.toLocaleString(undefined,{maximumFractionDigits:2,minimumFractionDigits:2});
 function calc(){const w=Math.max(52-v('off'),0),y=v('rate')*v('hrs')*w;$('out').innerHTML='<div>Yearly income</div><div class="big">'+f(y)+'</div><table><tr><td>Monthly</td><td>'+f(y/12)+'</td></tr><tr><td>Weekly (worked)</td><td>'+f(v('rate')*v('hrs'))+'</td></tr><tr><td>Daily (8h)</td><td>'+f(v('rate')*8)+'</td></tr></table>';}
 document.querySelectorAll('input,select').forEach(i=>i.addEventListener('input',calc));calc();
-</script></body></html>
+</script><p style="text-align:center;opacity:.5;font-size:.8rem"><img src="https://visitor-badge.laobi.icu/badge?page_id=kleogeos.freelancer-tools.hourly-to-salary-calculator" alt="page views"></p></body></html>
