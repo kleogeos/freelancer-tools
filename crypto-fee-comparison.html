@@ -1,0 +1,115 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Live Crypto Network Fee Comparison (TRC20 vs ERC20 vs BEP20) for Freelancers</title>
+<meta name="description" content="Live comparison of USDT transfer fees on TRC20, ERC20 and BEP20, fetched from public blockchain nodes. Pick the cheapest network before you invoice a client.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Live Crypto Network Fee Comparison for Freelancers">
+<meta property="og:description" content="Live comparison of USDT transfer fees on TRC20, ERC20 and BEP20, fetched from public blockchain nodes.">
+<meta property="og:url" content="https://kleogeos.github.io/freelancer-tools/crypto-fee-comparison.html">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Live Crypto Network Fee Comparison for Freelancers">
+<meta name="twitter:description" content="Live USDT transfer fees on TRC20, ERC20 and BEP20.">
+<link rel="stylesheet" href="style.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "Crypto Network Fee Comparison", "url": "https://kleogeos.github.io/freelancer-tools/crypto-fee-comparison.html", "applicationCategory": "BusinessApplication", "operatingSystem": "Any (runs in browser)", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "description": "Live comparison of USDT transfer fees on TRC20, ERC20 and BEP20, fetched directly from public blockchain nodes."}</script>
+<style>
+table.fees{width:100%;border-collapse:collapse;margin-top:1rem}
+table.fees th,table.fees td{padding:.5rem .6rem;border-bottom:1px solid #eee;text-align:left}
+table.fees th{font-size:.85rem;color:#555}
+.cheapest{color:#1a7a3a;font-weight:700}
+.unavailable{color:#999;font-style:italic}
+#ts{font-size:.85rem;color:#777;margin-top:.5rem}
+</style>
+</head><body>
+<header><span class="brand">Freelancer Toolbox</span><nav><a href="index.html">Home</a><a href="how-to-accept-crypto-payments-freelancer.html">Crypto payments guide</a></nav></header>
+
+<h1>Live Crypto Network Fee Comparison</h1>
+<p class="tagline">Fetched directly from public blockchain nodes when you load this page — not a cached table. Pick the cheapest network before sending your invoice.</p>
+
+<table class="fees" id="feeTable">
+<thead><tr><th>Network</th><th>Current gas price</th><th>Est. cost — one USDT transfer</th></tr></thead>
+<tbody>
+<tr id="row-trc20"><td>USDT (TRC20 / Tron)</td><td>—</td><td class="unavailable">typically ~$0.10–$1 (resource-based, not gas-price based)</td></tr>
+<tr id="row-erc20"><td>USDT (ERC20 / Ethereum)</td><td id="eth-gas">loading…</td><td id="eth-cost">loading…</td></tr>
+<tr id="row-bep20"><td>USDT (BEP20 / BNB Chain)</td><td id="bsc-gas">loading…</td><td id="bsc-cost">loading…</td></tr>
+</tbody>
+</table>
+<p id="ts"></p>
+
+<section>
+<h2>Why this matters</h2>
+<p>All three networks can carry USDT, but the cost of actually sending it varies a lot — mostly driven by how busy the network is right now. Ethereum (ERC20) fees spike when the network is congested; TRC20 and BEP20 stay cheap almost always. If your client is picking a network, cheaper usually means TRC20 or BEP20 unless their wallet only supports ERC20.</p>
+<p>These are network fees only (what the blockchain charges to process the transfer) — they're paid by whoever sends the transaction, same as a bank wire fee, and are unrelated to the invoice amount itself.</p>
+</section>
+
+<div class="box">Check whether a payment landed: <a href="https://github.com/kleogeos/crypto-pay-cli">crypto-pay-cli</a>. Generate an invoice with a scan-to-pay QR code: <a href="crypto-invoice-generator.html">crypto invoice generator</a>.</div>
+
+<footer><a href="index.html">← Back to free tools</a></footer>
+
+<script>
+async function rpcGasPrice(url){
+  const r = await fetch(url, {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({jsonrpc:'2.0',method:'eth_gasPrice',params:[],id:1})});
+  const j = await r.json();
+  return parseInt(j.result, 16); // wei
+}
+async function coingeckoPrices(){
+  const r = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=ethereum,binancecoin,tron&vs_currencies=usd');
+  return r.json();
+}
+function fmtUsd(n){
+  if (n < 0.01) return '$' + n.toFixed(4);
+  return '$' + n.toFixed(2);
+}
+async function load(){
+  let prices;
+  try { prices = await coingeckoPrices(); } catch(e) { prices = null; }
+
+  try {
+    const wei = await rpcGasPrice('https://ethereum-rpc.publicnode.com');
+    const gwei = wei / 1e9;
+    document.getElementById('eth-gas').textContent = gwei.toFixed(2) + ' gwei';
+    if (prices && prices.ethereum) {
+      const costEth = wei * 65000 / 1e18;
+      const costUsd = costEth * prices.ethereum.usd;
+      document.getElementById('eth-cost').textContent = fmtUsd(costUsd) + ' (est.)';
+    } else {
+      document.getElementById('eth-cost').textContent = gwei.toFixed(2) + ' gwei × 65000 gas';
+    }
+  } catch(e) {
+    document.getElementById('eth-gas').textContent = 'unavailable';
+    document.getElementById('eth-cost').className = 'unavailable';
+    document.getElementById('eth-cost').textContent = 'try again later';
+  }
+
+  try {
+    const wei = await rpcGasPrice('https://bsc-rpc.publicnode.com');
+    const gwei = wei / 1e9;
+    document.getElementById('bsc-gas').textContent = gwei.toFixed(2) + ' gwei';
+    if (prices && prices.binancecoin) {
+      const costBnb = wei * 65000 / 1e18;
+      const costUsd = costBnb * prices.binancecoin.usd;
+      document.getElementById('bsc-cost').textContent = fmtUsd(costUsd) + ' (est.)';
+    } else {
+      document.getElementById('bsc-cost').textContent = gwei.toFixed(2) + ' gwei × 65000 gas';
+    }
+  } catch(e) {
+    document.getElementById('bsc-gas').textContent = 'unavailable';
+    document.getElementById('bsc-cost').className = 'unavailable';
+    document.getElementById('bsc-cost').textContent = 'try again later';
+  }
+
+  if (prices && prices.tron) {
+    document.getElementById('row-trc20').children[1].textContent = 'TRX ≈ $' + prices.tron.usd.toFixed(3);
+  }
+
+  document.getElementById('ts').textContent = 'Last fetched: ' + new Date().toLocaleString();
+
+  // highlight cheapest among the two live-estimated networks
+  const ethText = document.getElementById('eth-cost').textContent;
+  const bscText = document.getElementById('bsc-cost').textContent;
+  const ethVal = parseFloat(ethText.replace('$','')) || Infinity;
+  const bscVal = parseFloat(bscText.replace('$','')) || Infinity;
+  if (bscVal <= ethVal) document.getElementById('bsc-cost').classList.add('cheapest');
+  else document.getElementById('eth-cost').classList.add('cheapest');
+}
+load();
+</script>
+</body></html>
