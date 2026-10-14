@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://kleogeos.github.io/freelancer-tools/sitemap.xml
