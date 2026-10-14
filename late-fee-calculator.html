@@ -25,4 +25,4 @@ const $=id=>document.getElementById(id), v=id=>parseFloat($(id).value)||0;
 const f=n=>n.toLocaleString(undefined,{maximumFractionDigits:2,minimumFractionDigits:2});
 function calc(){const i=v('amt')*v('rate')/100*v('days')/365,t=v('amt')+i+v('flat');$('out').innerHTML='<div>Total now due</div><div class="big">'+f(t)+'</div><table><tr><td>Original amount</td><td>'+f(v('amt'))+'</td></tr><tr><td>Interest ('+v('days')+' days)</td><td>'+f(i)+'</td></tr><tr><td>Flat fee</td><td>'+f(v('flat'))+'</td></tr><tr><td>Interest per extra day</td><td>'+f(v('amt')*v('rate')/100/365)+'</td></tr></table>';}
 document.querySelectorAll('input,select').forEach(i=>i.addEventListener('input',calc));calc();
-</script></body></html>
+</script><p style="text-align:center;opacity:.5;font-size:.8rem"><img src="https://visitor-badge.laobi.icu/badge?page_id=kleogeos.freelancer-tools.late-fee-calculator" alt="page views"></p></body></html>
