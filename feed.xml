@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+<title>Freelancer Toolbox — Guides</title>
+<link href="https://kleogeos.github.io/freelancer-tools/feed.xml" rel="self"/>
+<link href="https://kleogeos.github.io/freelancer-tools/"/>
+<updated>2026-10-15T00:00:00Z</updated>
+<id>https://kleogeos.github.io/freelancer-tools/</id>
+<author><name>kleogeos</name></author>
+
+<entry>
+<title>Как фрилансеру из России выставить счёт иностранному клиенту</title>
+<link href="https://kleogeos.github.io/freelancer-tools/kak-vystavit-schet-inostrannomu-klientu.html"/>
+<id>https://kleogeos.github.io/freelancer-tools/kak-vystavit-schet-inostrannomu-klientu.html</id>
+<updated>2026-10-15T00:00:00Z</updated>
+<summary>Что указать в счёте для зарубежного заказчика, какую валюту и способ оплаты выбрать, и при чём тут 115-ФЗ и крипта.</summary>
+</entry>
+
+<entry>
+<title>Как фрилансеру принимать оплату в крипте (USDT/TRC20)</title>
+<link href="https://kleogeos.github.io/freelancer-tools/kak-frilanseru-prinimat-kripto-oplatu.html"/>
+<id>https://kleogeos.github.io/freelancer-tools/kak-frilanseru-prinimat-kripto-oplatu.html</id>
+<updated>2026-10-15T00:00:00Z</updated>
+<summary>Практическое руководство для фрилансеров из России и СНГ: как принимать оплату в USDT, если PayPal, Stripe и Gumroad не выплачивают в вашу страну.</summary>
+</entry>
+
+<entry>
+<title>How Freelancers Can Accept Crypto Payments</title>
+<link href="https://kleogeos.github.io/freelancer-tools/how-to-accept-crypto-payments-freelancer.html"/>
+<id>https://kleogeos.github.io/freelancer-tools/how-to-accept-crypto-payments-freelancer.html</id>
+<updated>2026-10-14T00:00:00Z</updated>
+<summary>USDT/USDC basics, picking a network, invoicing clients, and tracking tax cost basis.</summary>
+</entry>
+
+<entry>
+<title>Late Payment Email Templates</title>
+<link href="https://kleogeos.github.io/freelancer-tools/freelance-late-payment-email.html"/>
+<id>https://kleogeos.github.io/freelancer-tools/freelance-late-payment-email.html</id>
+<updated>2026-10-14T00:00:00Z</updated>
+<summary>Four ready-to-send emails, from friendly reminder to final notice.</summary>
+</entry>
+
+<entry>
+<title>How to Write a Freelance Invoice: What to Include</title>
+<link href="https://kleogeos.github.io/freelancer-tools/how-to-write-freelance-invoice.html"/>
+<id>https://kleogeos.github.io/freelancer-tools/how-to-write-freelance-invoice.html</id>
+<updated>2026-10-14T00:00:00Z</updated>
+<summary>What every freelance invoice needs: numbers, payment terms, late fees, and how to get paid faster.</summary>
+</entry>
+
+<entry>
+<title>How to Calculate Your Freelance Hourly Rate</title>
+<link href="https://kleogeos.github.io/freelancer-tools/how-to-calculate-freelance-hourly-rate.html"/>
+<id>https://kleogeos.github.io/freelancer-tools/how-to-calculate-freelance-hourly-rate.html</id>
+<updated>2026-10-14T00:00:00Z</updated>
+<summary>The formula behind the rate calculator, explained step by step.</summary>
+</entry>
+
+</feed>
