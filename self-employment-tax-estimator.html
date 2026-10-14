@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>US Self-Employment Tax Estimator (Social Security + Medicare) — free</title>
+<meta name="description" content="Estimate US self-employment tax (15.3%) on freelance profit, with the deductible half. Free, private, no signup.">
+<link rel="canonical" href="https://kleogeos.github.io/freelancer-tools/self-employment-tax-estimator.html">
+<style>
+body{font:16px/1.5 system-ui,sans-serif;max-width:680px;margin:2rem auto;padding:0 1rem;color:#1a1a1a}
+h1{font-size:1.6rem}label{display:block;margin:.8rem 0 .2rem;font-weight:600}
+input,select{width:100%;padding:.5rem;font-size:1rem;box-sizing:border-box;border:1px solid #bbb;border-radius:6px}
+.out{background:#f3f7ff;border:1px solid #c9d9ff;border-radius:8px;padding:1rem;margin-top:1.5rem}
+.big{font-size:2rem;font-weight:700}small{color:#555}table{width:100%;border-collapse:collapse;margin-top:.5rem}td{padding:.25rem 0}
+nav a{margin-right:1rem}
+</style></head><body>
+<nav><a href="index.html">Toolbox</a><a href="invoice.html">Invoice</a><a href="rate-calculator.html">Rate</a></nav>
+<h1>Self-Employment Tax Estimator (US)</h1><p>Rough estimate of the 15.3% US self-employment tax on freelance net profit. Everything runs in your browser; nothing is sent anywhere.</p>
+<label>Net profit (income minus business expenses)</label><input id="np" type="number" value="60000" min="0" step="any">
+<label>Social Security wage base (update if it changed)</label><input id="wb" type="number" value="184500" min="0" step="any">
+<div class="out" id="out"></div>
+<p><small>An estimate, not financial, legal or tax advice.</small></p>
+<p><small>Excludes income tax, the additional Medicare tax and state taxes. The wage base changes yearly: verify the current figure at irs.gov.</small></p>
+<script>
+const $=id=>document.getElementById(id), v=id=>parseFloat($(id).value)||0;
+const f=n=>n.toLocaleString(undefined,{maximumFractionDigits:2,minimumFractionDigits:2});
+function calc(){const base=v('np')*0.9235,ss=Math.min(base,v('wb'))*0.124,med=base*0.029,t=ss+med;$('out').innerHTML='<div>Estimated self-employment tax</div><div class="big">'+f(t)+'</div><table><tr><td>Social Security (12.4%)</td><td>'+f(ss)+'</td></tr><tr><td>Medicare (2.9%)</td><td>'+f(med)+'</td></tr><tr><td>Deductible half</td><td>'+f(t/2)+'</td></tr><tr><td>Effective % of profit</td><td>'+(v('np')?f(t/v('np')*100):0)+'%</td></tr></table>';}
+document.querySelectorAll('input,select').forEach(i=>i.addEventListener('input',calc));calc();
+</script></body></html>
