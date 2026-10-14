@@ -1,0 +1,43 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Free Invoice Generator — no signup, runs in your browser</title>
+<meta name="description" content="Create a clean PDF invoice in seconds. Free, no signup, nothing is uploaded: everything stays in your browser.">
+<style>
+body{font:15px system-ui,sans-serif;max-width:860px;margin:0 auto;padding:16px;color:#222}
+h1{font-size:22px}label{display:block;font-size:12px;color:#555;margin-top:8px}
+input,textarea,select{width:100%;padding:6px;box-sizing:border-box;border:1px solid #ccc;border-radius:4px;font:inherit}
+.row{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+table{width:100%;border-collapse:collapse;margin-top:12px}td,th{padding:4px;border-bottom:1px solid #eee;text-align:left}
+td input{width:100%}.num{width:90px}button{padding:8px 14px;margin:8px 8px 0 0;border:0;border-radius:4px;background:#2455d6;color:#fff;cursor:pointer}
+button.sec{background:#666}.total{text-align:right;font-size:18px;margin-top:10px}
+.promo{margin-top:24px;padding:12px;background:#f4f6fb;border-radius:6px;font-size:13px}
+@media print{.noprint{display:none}body{max-width:none}input,textarea{border:0;padding:0}}
+</style></head><body>
+<h1>Free Invoice Generator</h1>
+<div class="noprint" style="color:#555">Fill in, then “Print / Save as PDF”. Data is saved only in your browser (localStorage).</div>
+<div class="row"><div><label>From (your name / company, address, tax ID)</label><textarea id="from" rows="4"></textarea></div>
+<div><label>Bill to</label><textarea id="to" rows="4"></textarea></div>
+<div><label>Invoice #</label><input id="num" value="2026-001"><label>Issue date</label><input id="date" type="date"><label>Due date</label><input id="due" type="date"></div></div>
+<div class="row"><div><label>Currency symbol</label><input id="cur" value="$"></div><div><label>Tax %</label><input id="tax" type="number" value="0" step="0.1"></div></div>
+<table><thead><tr><th>Description</th><th>Qty</th><th>Rate</th><th>Amount</th><th class="noprint"></th></tr></thead><tbody id="rows"></tbody></table>
+<button class="sec noprint" onclick="addRow()">+ Add line</button>
+<div class="total" id="totals"></div>
+<label>Payment details / notes</label><textarea id="notes" rows="3" placeholder="IBAN, PayPal, payment terms, late fee…"></textarea>
+<div class="noprint"><button onclick="window.print()">Print / Save as PDF</button><button class="sec" onclick="reset()">Clear</button></div>
+<div class="promo noprint">Need the contract, proposal and late-payment emails too? Get the <b>Freelancer Starter Kit</b>. <a id="kit" href="#">Learn more</a></div>
+<script>
+const $=id=>document.getElementById(id),F=['from','to','num','date','due','cur','tax','notes'];
+let rows=[{d:'',q:1,r:0}];
+function load(){try{const s=JSON.parse(localStorage.inv||'{}');F.forEach(f=>{if(s[f]!=null)$(f).value=s[f]});rows=s.rows||rows}catch(e){}
+ if(!$('date').value)$('date').value=new Date().toISOString().slice(0,10)}
+function save(){const s={rows};F.forEach(f=>s[f]=$(f).value);localStorage.inv=JSON.stringify(s)}
+function fmt(n){return $('cur').value+n.toFixed(2)}
+function render(){$('rows').innerHTML=rows.map((x,i)=>`<tr><td><input value="${x.d.replace(/"/g,'&quot;')}" oninput="rows[${i}].d=this.value;upd()"></td>
+<td><input class="num" type="number" value="${x.q}" oninput="rows[${i}].q=+this.value;upd()"></td>
+<td><input class="num" type="number" value="${x.r}" step="0.01" oninput="rows[${i}].r=+this.value;upd()"></td>
+<td id="a${i}">${fmt(x.q*x.r)}</td><td class="noprint"><button class="sec" onclick="rows.splice(${i},1);render();upd()">×</button></td></tr>`).join('');upd()}
+function upd(){let sub=0;rows.forEach((x,i)=>{const a=x.q*x.r;sub+=a;const c=$('a'+i);if(c)c.textContent=fmt(a)});
+ const t=sub*(+$('tax').value||0)/100;$('totals').innerHTML=`Subtotal ${fmt(sub)}<br>Tax ${fmt(t)}<br><b>Total due ${fmt(sub+t)}</b>`;save()}
+function addRow(){rows.push({d:'',q:1,r:0});render()}
+function reset(){if(confirm('Clear all fields?')){localStorage.removeItem('inv');location.reload()}}
+F.forEach(f=>$(f).addEventListener('input',upd));load();render();
+</script></body></html>
