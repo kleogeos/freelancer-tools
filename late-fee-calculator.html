@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Late Payment Fee & Interest Calculator for Invoices — free</title>
+<meta name="description" content="Calculate late fees and interest on an overdue invoice: flat fee plus monthly or annual percentage. Free, private, no signup.">
+<link rel="canonical" href="https://kleogeos.github.io/freelancer-tools/late-fee-calculator.html">
+<style>
+body{font:16px/1.5 system-ui,sans-serif;max-width:680px;margin:2rem auto;padding:0 1rem;color:#1a1a1a}
+h1{font-size:1.6rem}label{display:block;margin:.8rem 0 .2rem;font-weight:600}
+input,select{width:100%;padding:.5rem;font-size:1rem;box-sizing:border-box;border:1px solid #bbb;border-radius:6px}
+.out{background:#f3f7ff;border:1px solid #c9d9ff;border-radius:8px;padding:1rem;margin-top:1.5rem}
+.big{font-size:2rem;font-weight:700}small{color:#555}table{width:100%;border-collapse:collapse;margin-top:.5rem}td{padding:.25rem 0}
+nav a{margin-right:1rem}
+</style></head><body>
+<nav><a href="index.html">Toolbox</a><a href="invoice.html">Invoice</a><a href="rate-calculator.html">Rate</a></nav>
+<h1>Late Payment Fee Calculator</h1><p>Work out what an overdue invoice should now cost the client. Everything runs in your browser; nothing is sent anywhere.</p>
+<label>Invoice amount</label><input id="amt" type="number" value="1000" min="0" step="any">
+<label>Days overdue</label><input id="days" type="number" value="30" min="0" step="any">
+<label>Annual interest rate (%)</label><input id="rate" type="number" value="10" min="0" step="any">
+<label>Flat late fee</label><input id="flat" type="number" value="0" min="0" step="any">
+<div class="out" id="out"></div>
+<p><small>An estimate, not financial, legal or tax advice.</small></p>
+<p>Charging late fees only works if your contract or invoice states them in advance. See <a href="freelance-late-payment-email.html">late payment email templates</a>.</p>
+<script>
+const $=id=>document.getElementById(id), v=id=>parseFloat($(id).value)||0;
+const f=n=>n.toLocaleString(undefined,{maximumFractionDigits:2,minimumFractionDigits:2});
+function calc(){const i=v('amt')*v('rate')/100*v('days')/365,t=v('amt')+i+v('flat');$('out').innerHTML='<div>Total now due</div><div class="big">'+f(t)+'</div><table><tr><td>Original amount</td><td>'+f(v('amt'))+'</td></tr><tr><td>Interest ('+v('days')+' days)</td><td>'+f(i)+'</td></tr><tr><td>Flat fee</td><td>'+f(v('flat'))+'</td></tr><tr><td>Interest per extra day</td><td>'+f(v('amt')*v('rate')/100/365)+'</td></tr></table>';}
+document.querySelectorAll('input,select').forEach(i=>i.addEventListener('input',calc));calc();
+</script></body></html>
