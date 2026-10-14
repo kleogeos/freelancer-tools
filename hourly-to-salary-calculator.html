@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Hourly Rate to Salary Converter (and back) — free</title>
+<meta name="description" content="Convert an hourly rate into a yearly, monthly, weekly and daily salary, accounting for unpaid weeks off. Free, no signup.">
+<link rel="canonical" href="https://kleogeos.github.io/freelancer-tools/hourly-to-salary-calculator.html">
+<style>
+body{font:16px/1.5 system-ui,sans-serif;max-width:680px;margin:2rem auto;padding:0 1rem;color:#1a1a1a}
+h1{font-size:1.6rem}label{display:block;margin:.8rem 0 .2rem;font-weight:600}
+input,select{width:100%;padding:.5rem;font-size:1rem;box-sizing:border-box;border:1px solid #bbb;border-radius:6px}
+.out{background:#f3f7ff;border:1px solid #c9d9ff;border-radius:8px;padding:1rem;margin-top:1.5rem}
+.big{font-size:2rem;font-weight:700}small{color:#555}table{width:100%;border-collapse:collapse;margin-top:.5rem}td{padding:.25rem 0}
+nav a{margin-right:1rem}
+</style></head><body>
+<nav><a href="index.html">Toolbox</a><a href="invoice.html">Invoice</a><a href="rate-calculator.html">Rate</a></nav>
+<h1>Hourly Rate to Salary Converter</h1><p>Turn an hourly rate into annual, monthly, weekly and daily income. Everything runs in your browser; nothing is sent anywhere.</p>
+<label>Hourly rate</label><input id="rate" type="number" value="50" min="0" step="any">
+<label>Hours per week</label><input id="hrs" type="number" value="40" min="0" step="any">
+<label>Unpaid weeks off per year</label><input id="off" type="number" value="4" min="0" step="any">
+<div class="out" id="out"></div>
+<p><small>An estimate, not financial, legal or tax advice.</small></p>
+<p>Freelancers: this is gross billed income. Use the <a href="rate-calculator.html">rate calculator</a> to account for taxes, expenses and unbillable time.</p>
+<script>
+const $=id=>document.getElementById(id), v=id=>parseFloat($(id).value)||0;
+const f=n=>n.toLocaleString(undefined,{maximumFractionDigits:2,minimumFractionDigits:2});
+function calc(){const w=Math.max(52-v('off'),0),y=v('rate')*v('hrs')*w;$('out').innerHTML='<div>Yearly income</div><div class="big">'+f(y)+'</div><table><tr><td>Monthly</td><td>'+f(y/12)+'</td></tr><tr><td>Weekly (worked)</td><td>'+f(v('rate')*v('hrs'))+'</td></tr><tr><td>Daily (8h)</td><td>'+f(v('rate')*8)+'</td></tr></table>';}
+document.querySelectorAll('input,select').forEach(i=>i.addEventListener('input',calc));calc();
+</script></body></html>
