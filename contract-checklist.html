@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Freelance Contract Checklist — scan for missing clauses, free</title>
+<meta name="description" content="Paste your freelance contract and check it for commonly-missing clauses: payment terms, late fees, IP ownership, termination, liability, and more. Runs locally in your browser; nothing is uploaded.">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "Freelance Contract Checklist", "url": "https://kleogeos.github.io/freelancer-tools/contract-checklist.html", "applicationCategory": "BusinessApplication", "operatingSystem": "Any (runs in browser)", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "description": "Paste your freelance contract and check it for commonly-missing clauses: payment terms, late fees, IP ownership, termination, liability, and more."}</script>
+<style>
+body{font:16px/1.5 system-ui,sans-serif;max-width:680px;margin:2rem auto;padding:0 1rem;color:#1a1a1a}
+h1{font-size:1.6rem}
+textarea{width:100%;min-height:220px;padding:.6rem;font:14px/1.4 ui-monospace,monospace;box-sizing:border-box;border:1px solid #bbb;border-radius:6px}
+button{margin-top:.8rem;padding:.6rem 1.2rem;font-size:1rem;background:#1a1a1a;color:#fff;border:none;border-radius:6px;cursor:pointer}
+.out{margin-top:1.5rem}
+.found{color:#1a7a1a}.missing{color:#a33}
+ul{padding-left:1.2rem}
+small{color:#555}
+.cta{margin-top:2rem;padding:1rem;border:1px dashed #999;border-radius:8px}
+nav{margin-bottom:1rem}nav a{color:#555;text-decoration:none}
+</style></head><body>
+<nav><a href="index.html">&larr; Freelancer Toolbox</a></nav>
+<h1>Freelance Contract Checklist</h1>
+<p>Paste your contract below. Everything runs locally in your browser — nothing is uploaded anywhere.</p>
+<textarea id="input" placeholder="Paste your contract text here..."></textarea>
+<div><button id="run">Check contract</button></div>
+<div class="out" id="out"></div>
+<p><small>Keyword heuristic only, not legal advice — this won't catch clauses phrased unusually, and finding a keyword doesn't mean the clause is actually good. Read your contract yourself.</small></p>
+<div class="cta" id="cta" hidden></div>
+<p><small>Prefer the command line? <a href="https://github.com/kleogeos/contract-checklist-cli">contract-checklist-cli</a> (pip-installable, also works as a pre-commit hook).</small></p>
+<script>
+const CHECKS=[
+["payment terms / due date",["payment","due","net 15","net 30","invoice"]],
+["late payment fee / interest",["late fee","late payment","interest","overdue"]],
+["scope of work / deliverables",["scope","deliverable","in scope","out of scope"]],
+["revision limit",["revision","round of feedback","revisions included"]],
+["intellectual property / ownership",["intellectual property","copyright","ownership","license"]],
+["termination clause",["terminat","cancel"]],
+["confidentiality / NDA",["confidential","non-disclosure","nda"]],
+["kill fee / deposit",["deposit","kill fee","upfront","down payment"]],
+["liability limitation",["liability","indemnif","warrant"]],
+["governing law / jurisdiction",["governing law","jurisdiction","venue"]]
+];
+const $=id=>document.getElementById(id);
+function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;');}
+function run(){
+ const text=$('input').value.toLowerCase();
+ const found=[],missing=[];
+ for(const [label,kws] of CHECKS){
+  (kws.some(k=>text.includes(k))?found:missing).push(label);
+ }
+ let html='<p><strong>'+found.length+'/'+CHECKS.length+'</strong> common clauses detected.</p>';
+ if(found.length)html+='<p class="found">Found:</p><ul>'+found.map(l=>'<li>'+esc(l)+'</li>').join('')+'</ul>';
+ if(missing.length)html+='<p class="missing">Possibly missing — worth double-checking:</p><ul>'+missing.map(l=>'<li>'+esc(l)+'</li>').join('')+'</ul>';
+ $('out').innerHTML=html;
+}
+$('run').addEventListener('click',run);
+const KIT_URL='';
+if(KIT_URL){$('cta').hidden=false;$('cta').innerHTML='Need a contract template with these clauses already in it? <a href="'+KIT_URL+'">Freelancer Starter Kit</a>.';}
+</script></body></html>
