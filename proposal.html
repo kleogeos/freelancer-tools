@@ -1,0 +1,60 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Free Proposal / Quote Generator — no signup, runs in your browser</title>
+<meta name="description" content="Create a clean client proposal or quote in seconds: scope, pricing, timeline, terms. Free, no signup, nothing is uploaded: everything stays in your browser.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Free Proposal / Quote Generator — no signup, runs in your browser">
+<meta property="og:description" content="Create a clean client proposal or quote in seconds: scope, pricing, timeline, terms. Free, no signup, nothing is uploaded: everything stays in your browser.">
+<meta property="og:url" content="https://kleogeos.github.io/freelancer-tools/proposal.html">
+<meta name="twitter:card" content="summary">
+<style>
+body{font:15px system-ui,sans-serif;max-width:860px;margin:0 auto;padding:16px;color:#222}
+h1{font-size:22px}label{display:block;font-size:12px;color:#555;margin-top:8px}
+input,textarea,select{width:100%;padding:6px;box-sizing:border-box;border:1px solid #ccc;border-radius:4px;font:inherit}
+.row{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+table{width:100%;border-collapse:collapse;margin-top:12px}td,th{padding:4px;border-bottom:1px solid #eee;text-align:left}
+td input{width:100%}.num{width:110px}button{padding:8px 14px;margin:8px 8px 0 0;border:0;border-radius:4px;background:#2455d6;color:#fff;cursor:pointer}
+button.sec{background:#666}.total{text-align:right;font-size:18px;margin-top:10px}
+.promo{margin-top:24px;padding:12px;background:#f4f6fb;border-radius:6px;font-size:13px}
+ul#scopeList{list-style:none;margin:4px 0;padding:0}
+ul#scopeList li{display:flex;gap:6px;margin-top:4px}
+ul#scopeList li input{flex:1}
+.sign{margin-top:32px;display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.sign div{border-top:1px solid #333;padding-top:4px;font-size:13px;color:#666}
+@media print{.noprint{display:none}body{max-width:none}input,textarea{border:0;padding:0}}
+</style><script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "Free Proposal / Quote Generator", "url": "https://kleogeos.github.io/freelancer-tools/proposal.html", "applicationCategory": "BusinessApplication", "operatingSystem": "Any (runs in browser)", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "description": "Create a clean client proposal or quote in seconds: scope, pricing, timeline, terms. Free, no signup, nothing is uploaded: everything stays in your browser."}</script></head><body>
+<h1>Free Proposal / Quote Generator</h1>
+<div class="noprint" style="color:#555">Fill in, then “Print / Save as PDF”. Data is saved only in your browser (localStorage). Prefer the command line? There's a <a href="https://github.com/kleogeos/freelance-proposal-cli">zero-dependency CLI version</a> too.</div>
+<div class="row"><div><label>From (your name / company)</label><textarea id="from" rows="3"></textarea></div>
+<div><label>To (client)</label><textarea id="to" rows="3"></textarea></div>
+<div><label>Proposal #</label><input id="num" value="2026-001"><label>Date</label><input id="date" type="date"><label>Valid until</label><input id="valid" type="date"></div></div>
+<label>Summary</label><textarea id="summary" rows="3" placeholder="One paragraph: what this project is and why it's worth doing."></textarea>
+<label>Scope of work</label>
+<ul id="scopeList"></ul>
+<button class="sec noprint" onclick="addScope()">+ Add scope item</button>
+<label style="margin-top:16px">Pricing</label>
+<table><thead><tr><th>Item</th><th>Amount</th><th class="noprint"></th></tr></thead><tbody id="rows"></tbody></table>
+<button class="sec noprint" onclick="addRow()">+ Add line</button>
+<div class="total" id="totals"></div>
+<label>Timeline</label><textarea id="timeline" rows="2" placeholder="e.g. 4 weeks from signed proposal and deposit"></textarea>
+<label>Terms</label><textarea id="terms" rows="2" placeholder="e.g. 50% deposit to start, 50% on delivery"></textarea>
+<label>Notes</label><textarea id="notes" rows="2"></textarea>
+<div class="sign noprint" style="opacity:.6"><div>Accepted by (client), date</div><div>From (you), date</div></div>
+<div class="noprint"><button onclick="window.print()">Print / Save as PDF</button><button class="sec" onclick="reset()">Clear</button></div>
+<div class="promo noprint">Need the invoice, contract and late-payment emails too? Get the <b>Freelancer Starter Kit</b>. <a id="kit" href="kit.html">Learn more</a></div>
+<script>
+const $=id=>document.getElementById(id),F=['from','to','num','date','valid','summary','timeline','terms','notes'];
+let rows=[{d:'',a:0}],scope=[''];
+function load(){try{const s=JSON.parse(localStorage.prop||'{}');F.forEach(f=>{if(s[f]!=null)$(f).value=s[f]});rows=s.rows||rows;scope=s.scope||scope}catch(e){}
+ if(!$('date').value)$('date').value=new Date().toISOString().slice(0,10)}
+function save(){const s={rows,scope};F.forEach(f=>s[f]=$(f).value);localStorage.prop=JSON.stringify(s)}
+function fmt(n){return '$'+n.toFixed(2)}
+function renderScope(){$('scopeList').innerHTML=scope.map((x,i)=>`<li><input value="${x.replace(/"/g,'&quot;')}" placeholder="e.g. Design 6 page templates" oninput="scope[${i}]=this.value;save()"><button class="sec noprint" onclick="scope.splice(${i},1);renderScope()">×</button></li>`).join('')}
+function addScope(){scope.push('');renderScope()}
+function render(){$('rows').innerHTML=rows.map((x,i)=>`<tr><td><input value="${x.d.replace(/"/g,'&quot;')}" oninput="rows[${i}].d=this.value;upd()"></td>
+<td><input class="num" type="number" value="${x.a}" step="0.01" oninput="rows[${i}].a=+this.value;upd()"></td>
+<td class="noprint"><button class="sec" onclick="rows.splice(${i},1);render();upd()">×</button></td></tr>`).join('');upd()}
+function upd(){let sub=0;rows.forEach(x=>sub+=x.a);$('totals').innerHTML=`<b>Total ${fmt(sub)}</b>`;save()}
+function addRow(){rows.push({d:'',a:0});render()}
+function reset(){if(confirm('Clear all fields?')){localStorage.removeItem('prop');location.reload()}}
+F.forEach(f=>$(f).addEventListener('input',upd));load();render();renderScope();
+</script><p style="text-align:center;opacity:.5;font-size:.8rem"><img src="https://visitor-badge.laobi.icu/badge?page_id=kleogeos.freelancer-tools.proposal" alt="page views"></p></body></html>
