@@ -1,0 +1,81 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Free NDA Generator — mutual NDA, no signup, runs in your browser</title>
+<meta name="description" content="Create a plain-language mutual NDA in seconds. Free, no signup, nothing is uploaded: everything stays in your browser. Print or save as PDF.">
+<link rel="canonical" href="https://kleogeos.github.io/freelancer-tools/nda-generator.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Free NDA Generator — mutual NDA, no signup, runs in your browser">
+<meta property="og:description" content="Create a plain-language mutual NDA in seconds. Free, no signup, nothing is uploaded: everything stays in your browser.">
+<meta property="og:url" content="https://kleogeos.github.io/freelancer-tools/nda-generator.html">
+<meta name="twitter:card" content="summary">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "Free NDA Generator", "url": "https://kleogeos.github.io/freelancer-tools/nda-generator.html", "applicationCategory": "BusinessApplication", "operatingSystem": "Any (runs in browser)", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "description": "Create a plain-language mutual NDA in seconds. Free, no signup, nothing is uploaded: everything stays in your browser."}</script>
+<style>
+body{font:15px system-ui,sans-serif;max-width:720px;margin:0 auto;padding:16px;color:#222}
+h1{font-size:22px}label{display:block;font-size:12px;color:#555;margin-top:10px}
+input,textarea{width:100%;padding:6px;box-sizing:border-box;border:1px solid #ccc;border-radius:4px;font:inherit}
+.row{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+.chk{display:flex;align-items:center;gap:6px;margin-top:10px}.chk input{width:auto}
+button{padding:8px 14px;margin:10px 8px 0 0;border:0;border-radius:4px;background:#2455d6;color:#fff;cursor:pointer}
+button.sec{background:#666}
+.out{margin-top:24px;padding-top:16px;border-top:1px solid #ddd}
+.out h2{font-size:18px}.out p{line-height:1.5}
+.disclaimer{background:#fff8e6;border:1px solid #f0d58c;border-radius:6px;padding:10px 14px;font-size:13px;color:#664d03;margin-top:16px}
+.sig{margin-top:24px;display:flex;gap:40px}.sig div{flex:1;border-top:1px solid #999;padding-top:6px;font-size:13px;color:#666}
+.promo{margin-top:24px;padding:12px;background:#f4f6fb;border-radius:6px;font-size:13px}
+nav{margin-bottom:1rem}nav a{color:#555;text-decoration:none}
+@media print{.noprint{display:none}body{max-width:none}input,textarea{border:0;padding:0}}
+</style></head><body>
+<nav class="noprint"><a href="index.html">&larr; Freelancer Toolbox</a></nav>
+<h1>Free NDA Generator</h1>
+<div class="noprint" style="color:#555">Fill in, then “Print / Save as PDF”. Nothing is uploaded — everything runs in your browser. For a scoped project after this, try the <a href="proposal.html">Proposal generator</a>.</div>
+
+<div class="noprint">
+<div class="row">
+<div><label>Party A (your name / company)</label><input id="a" value="Your name"></div>
+<div><label>Party B (client name / company)</label><input id="b" value="Client name"></div>
+</div>
+<label>Purpose (why you're sharing confidential info)</label>
+<textarea id="purpose" rows="2">discussing a potential freelance engagement</textarea>
+<div class="row">
+<div><label>Term (years)</label><input id="term" type="number" value="2" min="1"></div>
+<div><label>Governing law (optional)</label><input id="law" placeholder="e.g. the State of California"></div>
+</div>
+<div class="chk"><input id="mutual" type="checkbox" checked><label style="margin:0" for="mutual">Mutual (both sides share confidential info — usual for a discovery call)</label></div>
+<button class="noprint" onclick="window.print()">Print / Save as PDF</button>
+</div>
+
+<div class="out" id="out"></div>
+<p class="disclaimer">This is a general-purpose template, not legal advice. It covers the basics of a mutual NDA for a straightforward freelance discovery call. For high-value, cross-border, or especially sensitive engagements, have a licensed attorney in your jurisdiction review or draft the agreement instead.</p>
+
+<div class="promo noprint">Prefer the command line, or need to generate NDAs in a script? <a href="https://github.com/kleogeos/freelance-nda-cli">freelance-nda-cli</a> (zero dependencies, JSON in, HTML out).</div>
+<div class="promo noprint">Need the proposal, contract, invoice and late-payment emails too? Get the <b>Freelancer Starter Kit</b>. <a href="kit.html?src=web-nda">Learn more</a></div>
+
+<script>
+const $=id=>document.getElementById(id),F=['a','b','purpose','term','law'];
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function load(){try{const s=JSON.parse(localStorage.ndagen||'{}');F.forEach(f=>{if(s[f]!=null)$(f).value=s[f]});if(s.mutual!=null)$('mutual').checked=s.mutual}catch(e){}}
+function save(){const s={mutual:$('mutual').checked};F.forEach(f=>s[f]=$(f).value);localStorage.ndagen=JSON.stringify(s)}
+function render(){
+ save();
+ const a=$('a').value||'Party A', b=$('b').value||'Party B', purpose=$('purpose').value, term=$('term').value||2, law=$('law').value, mutual=$('mutual').checked;
+ const exclusions=['information that is or becomes publicly available through no fault of the receiving party',
+  "information the receiving party already lawfully knew before disclosure",
+  'information independently developed without using the disclosing party\'s confidential information',
+  'information required to be disclosed by law or court order, with prompt notice to the other party where legally permitted'];
+ const title = mutual ? 'Mutual Non-Disclosure Agreement' : 'Non-Disclosure Agreement';
+ const obligation = mutual
+  ? `Both ${esc(a)} and ${esc(b)} may disclose confidential information to each other, and both agree to the same obligations below as both a disclosing and a receiving party.`
+  : `${esc(a)} ("Disclosing Party") may disclose confidential information to ${esc(b)} ("Receiving Party"), who agrees to the obligations below.`;
+ let html = `<h2>${title}</h2>`;
+ html += `<p><b>${esc(a)}</b> and <b>${esc(b)}</b><br>Purpose: ${esc(purpose)}</p>`;
+ html += `<h2 style="font-size:15px">1. Confidential information</h2><p>${obligation} "Confidential information" means any non-public business, technical, or financial information disclosed in connection with the purpose above, whether in writing, verbally, or by inspection.</p>`;
+ html += `<h2 style="font-size:15px">2. Obligations</h2><p>The receiving party agrees to: use confidential information only for the purpose above; not disclose it to third parties without written consent; and protect it with at least the same care used for its own confidential information, but no less than reasonable care.</p>`;
+ html += `<h2 style="font-size:15px">3. Exclusions</h2><p>Confidential information does not include information that:</p><ul>${exclusions.map(e=>'<li>'+esc(e)+'</li>').join('')}</ul>`;
+ html += `<h2 style="font-size:15px">4. Term</h2><p>This agreement stays in effect for ${esc(term)} year(s) from the date of signing. Confidentiality obligations for information disclosed during that period survive the term's end.</p>`;
+ html += `<h2 style="font-size:15px">5. No obligation to proceed</h2><p>Signing this agreement does not obligate either party to enter into any further business relationship, contract, or transaction.</p>`;
+ if(law) html += `<h2 style="font-size:15px">6. Governing law</h2><p>This agreement is governed by the laws of ${esc(law)}.</p>`;
+ html += `<div class="sig"><div>${esc(a)}<br>Date: ____________</div><div>${esc(b)}<br>Date: ____________</div></div>`;
+ $('out').innerHTML=html;
+}
+[...F,'mutual'].forEach(f=>$(f).addEventListener('input',render));
+load();render();
+</script><p style="text-align:center;opacity:.5;font-size:.8rem"><img src="https://visitor-badge.laobi.icu/badge?page_id=kleogeos.freelancer-tools.nda-generator" alt="page views"></p></body></html>
