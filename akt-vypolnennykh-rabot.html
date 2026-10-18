@@ -1,0 +1,70 @@
+<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="canonical" href="https://kleogeos.github.io/freelancer-tools/akt-vypolnennykh-rabot.html">
+<title>Акт выполненных работ (оказанных услуг) — бесплатный генератор, без регистрации</title>
+<meta name="description" content="Составьте акт выполненных работ или оказанных услуг за минуту. Бесплатно, без регистрации: всё остаётся в вашем браузере, ничего не загружается на сервер.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Акт выполненных работ — бесплатный генератор">
+<meta property="og:description" content="Составьте акт выполненных работ или оказанных услуг за минуту. Бесплатно, без регистрации.">
+<meta property="og:url" content="https://kleogeos.github.io/freelancer-tools/akt-vypolnennykh-rabot.html">
+<meta name="twitter:card" content="summary">
+<style>
+body{font:15px system-ui,sans-serif;max-width:860px;margin:0 auto;padding:16px;color:#222}
+h1{font-size:22px}label{display:block;font-size:12px;color:#555;margin-top:8px}
+input,textarea,select{width:100%;padding:6px;box-sizing:border-box;border:1px solid #ccc;border-radius:4px;font:inherit}
+.row{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+table{width:100%;border-collapse:collapse;margin-top:12px}td,th{padding:4px;border-bottom:1px solid #eee;text-align:left}
+td input{width:100%}.num{width:90px}button{padding:8px 14px;margin:8px 8px 0 0;border:0;border-radius:4px;background:#2455d6;color:#fff;cursor:pointer}
+button.sec{background:#666}.total{text-align:right;font-size:18px;margin-top:10px}
+.promo{margin-top:24px;padding:12px;background:#f4f6fb;border-radius:6px;font-size:13px}
+.statement{margin-top:14px;font-size:14px;background:#fafafa;padding:10px;border-radius:6px}
+.sign{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:20px}
+.sign div{border-top:1px solid #999;padding-top:4px;font-size:12px;color:#555}
+@media print{.noprint{display:none}body{max-width:none}input,textarea{border:0;padding:0}}
+</style><script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "Акт выполненных работ — генератор", "url": "https://kleogeos.github.io/freelancer-tools/akt-vypolnennykh-rabot.html", "applicationCategory": "BusinessApplication", "operatingSystem": "Any (runs in browser)", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "description": "Составьте акт выполненных работ или оказанных услуг за минуту. Бесплатно, без регистрации."}</script></head><body>
+<h1>Акт выполненных работ (оказанных услуг)</h1>
+<div class="noprint" style="color:#555">Заполните поля и нажмите «Печать / Сохранить как PDF». Данные сохраняются только в вашем браузере (localStorage), никуда не отправляются. Единой законодательной формы акта не существует — документ составляется в свободной форме, это нормальный рабочий шаблон для ИП, самозанятых и фрилансеров.</div>
+
+<div class="row">
+<div><label>Исполнитель (ФИО или наименование, ИНН)</label><textarea id="from" rows="3" placeholder="Иванов Иван Иванович, ИНН 000000000000"></textarea></div>
+<div><label>Заказчик (наименование, ИНН/ОГРН)</label><textarea id="to" rows="3" placeholder="ООО «Ромашка», ИНН 0000000000, ОГРН 0000000000000"></textarea></div>
+</div>
+<div class="row">
+<div><label>№ акта</label><input id="num" value="1"></div>
+<div><label>Дата составления</label><input id="date" type="date"></div>
+<div><label>Город</label><input id="city" value="Москва"></div>
+</div>
+<div><label>К договору № (необязательно)</label><input id="contract" placeholder="№ 1 от 01.01.2026"></div>
+
+<table><thead><tr><th>Наименование работ (услуг)</th><th>Кол-во</th><th>Цена, ₽</th><th>Сумма, ₽</th><th class="noprint"></th></tr></thead><tbody id="rows"></tbody></table>
+<button class="sec noprint" onclick="addRow()">+ Добавить строку</button>
+<div class="total" id="totals"></div>
+
+<div class="statement">Исполнитель оказал услуги (выполнил работы), указанные в настоящем акте, в полном объёме, в установленный срок и с надлежащим качеством. Заказчик принял результат работ (услуг) и не имеет претензий по объёму, качеству и срокам оказания.</div>
+
+<div class="sign"><div>Исполнитель: _____________________</div><div>Заказчик: _____________________</div></div>
+
+<div class="noprint" style="margin-top:14px"><button onclick="window.print()">Печать / Сохранить как PDF</button><button class="sec" onclick="reset()">Очистить</button></div>
+
+<div class="promo noprint">Нужен ещё счёт для иностранного клиента, напоминания об оплате и чек-лист по самозанятости? Загляните в <b>RU Crypto Freelancer Kit</b>. <a href="ru-kit.html">Подробнее</a></div>
+<div class="promo noprint">Бесплатно по теме: <a href="chto-propisat-v-dogovore-s-frilanserom.html">что прописать в договоре с фрилансером</a>, чтобы не остаться без оплаты.</div>
+
+<script>
+const $=id=>document.getElementById(id),F=['from','to','num','date','city','contract'];
+let rows=[{d:'',q:1,r:0}];
+function load(){try{const s=JSON.parse(localStorage.akt||'{}');F.forEach(f=>{if(s[f]!=null)$(f).value=s[f]});rows=s.rows||rows}catch(e){}
+ if(!$('date').value)$('date').value=new Date().toISOString().slice(0,10)}
+function save(){const s={rows};F.forEach(f=>s[f]=$(f).value);localStorage.akt=JSON.stringify(s)}
+function fmt(n){return n.toFixed(2)+' ₽'}
+function render(){$('rows').innerHTML=rows.map((x,i)=>`<tr><td><input value="${x.d.replace(/"/g,'&quot;')}" oninput="rows[${i}].d=this.value;upd()"></td>
+<td><input class="num" type="number" value="${x.q}" oninput="rows[${i}].q=+this.value;upd()"></td>
+<td><input class="num" type="number" value="${x.r}" step="0.01" oninput="rows[${i}].r=+this.value;upd()"></td>
+<td id="a${i}">${fmt(x.q*x.r)}</td><td class="noprint"><button class="sec" onclick="rows.splice(${i},1);render();upd()">×</button></td></tr>`).join('');upd()}
+function upd(){let sub=0;rows.forEach((x,i)=>{const a=x.q*x.r;sub+=a;const c=$('a'+i);if(c)c.textContent=fmt(a)});
+ $('totals').innerHTML=`<b>Итого к оплате: ${fmt(sub)}</b>`;save()}
+function addRow(){rows.push({d:'',q:1,r:0});render()}
+function reset(){if(confirm('Очистить все поля?')){localStorage.removeItem('akt');location.reload()}}
+F.forEach(f=>$(f).addEventListener('input',upd));load();render();
+</script>
+<p style="text-align:center;opacity:.5;font-size:.8rem"><img src="https://visitor-badge.laobi.icu/badge?page_id=kleogeos.freelancer-tools.akt" alt="page views"></p>
+<script>(function(){var m=location.search.match(/[?&]src=([^&]+)/);if(m){var s=decodeURIComponent(m[1]).toLowerCase().replace(/[^a-z0-9_-]/g,'');if(s){new Image().src='https://visitor-badge.laobi.icu/badge?page_id=kleogeos.freelancer-tools.src-'+s;}}})();</script>
+</body></html>
