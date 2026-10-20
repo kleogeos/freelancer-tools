@@ -3,9 +3,65 @@
 <title>Freelancer Toolbox — Guides</title>
 <link href="https://kleogeos.github.io/freelancer-tools/feed.xml" rel="self"/>
 <link href="https://kleogeos.github.io/freelancer-tools/"/>
-<updated>2026-10-16T00:00:00Z</updated>
+<updated>2026-10-20T23:12:35Z</updated>
 <id>https://kleogeos.github.io/freelancer-tools/</id>
 <author><name>kleogeos</name></author>
+<entry>
+<title>Самозанятый и Boosty: как платить налог с донатов и платных постов</title>
+<link href="https://kleogeos.github.io/freelancer-tools/samozanyatyy-i-boosty-nalogi.html"/>
+<id>https://kleogeos.github.io/freelancer-tools/samozanyatyy-i-boosty-nalogi.html</id>
+<updated>2026-10-20T23:12:35Z</updated>
+<summary>Доход от Boosty — это доход, с которого нужен чек в приложении «Мой налог», даже если это 100 рублей. Разбираем ставку (4% или 6%?), лимит НПД и чем Boosty отличается от крипто-оплаты.</summary>
+</entry>
+
+<entry>
+<title>Самозанятый или ИП для фрилансера в 2026 году</title>
+<link href="https://kleogeos.github.io/freelancer-tools/samozanyatyy-ili-ip-dlya-frilansera-2026.html"/>
+<id>https://kleogeos.github.io/freelancer-tools/samozanyatyy-ili-ip-dlya-frilansera-2026.html</id>
+<updated>2026-10-20T22:21:14Z</updated>
+<summary>Налоги, взносы, лимит дохода: что выгоднее фрилансеру в 2026 — самозанятость (НПД) или ИП на УСН. Отдельно — почему при оплате в USDT от иностранного клиента выбор может быть другим.</summary>
+</entry>
+
+<entry>
+<title>Почему Gumroad и Etsy не работают для продавцов из России в 2026</title>
+<link href="https://kleogeos.github.io/freelancer-tools/pochemu-gumroad-i-etsy-ne-rabotayut-iz-rossii.html"/>
+<id>https://kleogeos.github.io/freelancer-tools/pochemu-gumroad-i-etsy-ne-rabotayut-iz-rossii.html</id>
+<updated>2026-10-20T15:34:28Z</updated>
+<summary>Разобрал по первоисточникам: Gumroad не выплачивает в РФ (PayPal закрыл Россию в 2022, банковских выплат в РФ нет), Etsy заблокировал магазины из РФ с 2022. Что реально работает вместо — крипта и Boosty.</summary>
+</entry>
+
+<entry>
+<title>Как рассчитать часовую ставку фрилансеру</title>
+<link href="https://kleogeos.github.io/freelancer-tools/kak-rasschitat-chasovuyu-stavku-frilanseru.html"/>
+<id>https://kleogeos.github.io/freelancer-tools/kak-rasschitat-chasovuyu-stavku-frilanseru.html</id>
+<updated>2026-10-17T23:13:14Z</updated>
+<summary>Формула часовой ставки для фрилансера в России: как учесть налог самозанятого или УСН, неоплачиваемые часы, отпуск и курс USDT, если клиент платит в крипте.</summary>
+</entry>
+
+<entry>
+<title>How to Write a Freelance Contract</title>
+<link href="https://kleogeos.github.io/freelancer-tools/how-to-write-a-freelance-contract.html"/>
+<id>https://kleogeos.github.io/freelancer-tools/how-to-write-a-freelance-contract.html</id>
+<updated>2026-10-17T22:37:43Z</updated>
+<summary>A freelance contract without these 6 clauses barely protects you: scope and acceptance, payment terms and late fees, IP assignment, confidentiality, termination, and what to do if the client disappears.</summary>
+</entry>
+
+<entry>
+<title>Что прописать в договоре с фрилансером, чтобы не остаться без оплаты</title>
+<link href="https://kleogeos.github.io/freelancer-tools/chto-propisat-v-dogovore-s-frilanserom.html"/>
+<id>https://kleogeos.github.io/freelancer-tools/chto-propisat-v-dogovore-s-frilanserom.html</id>
+<updated>2026-10-17T22:29:10Z</updated>
+<summary>6 пунктов, без которых договор с фрилансером почти не защищает: предмет и критерии приёмки, сроки согласования, штраф за просрочку, права на результат, NDA, что делать, если клиент пропал.</summary>
+</entry>
+
+<entry>
+<title>Telegram Stars как оплата для фрилансера: законно и без 282-ФЗ</title>
+<link href="https://kleogeos.github.io/freelancer-tools/telegram-stars-dlya-frilansera.html"/>
+<id>https://kleogeos.github.io/freelancer-tools/telegram-stars-dlya-frilansera.html</id>
+<updated>2026-10-16T09:58:18Z</updated>
+<summary>Криптовалюта для фрилансеров из России юридически мутна (282-ФЗ, 418-ФЗ), а PayPal/Stripe/Gumroad не платят в РФ. Разбираем Telegram Stars — третий вариант: не крипта, не банковская карта, работает уже сейчас.</summary>
+</entry>
+
 
 <entry>
 <title>Как вывести USDT в рубли с минимальными потерями на комиссии</title>
