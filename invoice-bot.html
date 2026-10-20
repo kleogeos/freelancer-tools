@@ -1,0 +1,58 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="canonical" href="https://kleogeos.github.io/freelancer-tools/invoice-bot.html">
+<title>Send a one-off invoice from Telegram — no kit, no terminal, 100 Stars</title>
+<meta name="description" content="Message @freelancerkitbot with /invoice and your line items. Pay 100 Telegram Stars (~$1.3) and get a polished HTML invoice back in seconds — no signup, no JSON, no download first.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Send a one-off invoice from Telegram — 100 Stars">
+<meta property="og:description" content="Message @freelancerkitbot with /invoice and your line items. Pay 100 Stars (~$1.3), get a polished HTML invoice back in seconds.">
+<meta property="og:url" content="https://kleogeos.github.io/freelancer-tools/invoice-bot.html">
+<meta name="twitter:card" content="summary">
+<link rel="stylesheet" href="style.css">
+</head><body>
+<header><span class="brand">Freelancer Toolbox</span><nav><a href="index.html">Home</a><a href="invoice.html">Free invoice tool</a><a href="kit.html">Starter Kit</a></nav></header>
+
+<h1>Send one invoice from Telegram — no kit, no terminal</h1>
+<p class="tagline">Message a bot with plain text, pay 100 Stars (~$1.3), get a polished HTML invoice back in seconds.</p>
+
+<div class="kit-cta">
+<p class="price">100 ⭐ (~$1.3) via Telegram</p>
+<p style="margin-top:1rem"><a class="buy-btn confirm-btn" href="https://t.me/freelancerkitbot">Message @freelancerkitbot &rarr;</a></p>
+<p class="buy-note">No signup, no account, no KYC. Opens Telegram — pay from your Stars balance.</p>
+</div>
+
+<section>
+<h2>How it works</h2>
+<ol>
+<li>Open a chat with <a href="https://t.me/freelancerkitbot">@freelancerkitbot</a> and send a message starting with <code>/invoice</code>, one field per line:</li>
+</ol>
+<pre style="background:#f7f7f7;border:1px solid #e5e5e5;border-radius:6px;padding:1rem;overflow-x:auto;font-size:.85rem;line-height:1.5">/invoice
+from: Your Name
+to: Client Name
+invoice_number: INV-001
+date: 2026-10-20
+due_date: 2026-11-20
+item: Website redesign | 10 | 50
+item: Logo design | 1 | 200</pre>
+<ol start="2">
+<li>The bot replies with a priced preview (subtotal, tax if you set one, total) and a payment link.</li>
+<li>Pay 100 Stars. You get a ready <code>invoice.html</code> file back as a document — open it in any browser, print it, or attach it to an email.</li>
+</ol>
+<p style="font-size:.9rem;color:#777"><code>item</code> lines use <code>description | quantity | rate</code>, one per line — at least one required. <code>from</code>/<code>to</code> are required; <code>invoice_number</code>, <code>date</code>, <code>due_date</code>, <code>tax_rate</code>, <code>notes</code> are optional.</p>
+</section>
+
+<section>
+<h2>Why not just use the free tool?</h2>
+<p>The <a href="invoice.html">free invoice generator</a> on this site does the same rendering and costs nothing — but it expects you to edit a JSON file or fill a form in a browser tab you have to keep open. This bot is for when you're already in Telegram talking to a client and just want a file sent back to that same chat, no new tab, no file to find afterward. It's a convenience, not a better invoice — the output is byte-for-byte the same template.</p>
+</section>
+
+<section>
+<h2>Need more than one invoice?</h2>
+<p>If you send proposals, contracts, and invoices regularly, the <a href="kit.html">Freelancer Starter Kit</a> ($15, one-time) bundles the invoice template with a proposal template, a services agreement, and a late-payment email — plain Markdown files you keep and reuse for every client, not a per-invoice bot.</p>
+</section>
+
+<section>
+<h2>Source</h2>
+<p>Open source (MIT), including the HTML rendering and the bot's payment handling: <a href="https://github.com/kleogeos/telegram-stars-checkout">github.com/kleogeos/telegram-stars-checkout</a>. Command-line version with no Telegram needed: <a href="https://github.com/kleogeos/freelance-invoice-cli">freelance-invoice-cli</a>.</p>
+</section>
+
+<footer><a href="index.html">&larr; Back to Freelancer Toolbox</a><p style="text-align:center;opacity:.5;font-size:.8rem"><img src="https://visitor-badge.laobi.icu/badge?page_id=kleogeos.freelancer-tools.invoice-bot" alt="page views"></p></footer>
+</body></html>
