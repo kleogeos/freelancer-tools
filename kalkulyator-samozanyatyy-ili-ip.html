@@ -1,0 +1,114 @@
+<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="canonical" href="https://kleogeos.github.io/freelancer-tools/kalkulyator-samozanyatyy-ili-ip.html">
+<title>Калькулятор: самозанятый или ИП — что выгоднее при вашем доходе (2026)</title>
+<meta name="description" content="Введите годовой доход — калькулятор посчитает налог НПД и налог+взносы ИП на УСН по цифрам 2026 года и покажет, что выгоднее. Считает в браузере, ничего не отправляется на сервер.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Калькулятор: самозанятый или ИП — что выгоднее">
+<meta property="og:description" content="НПД vs УСН по цифрам 2026 года: налог, фиксированные взносы ИП, лимит дохода самозанятого — что выгоднее при вашей сумме.">
+<meta property="og:url" content="https://kleogeos.github.io/freelancer-tools/kalkulyator-samozanyatyy-ili-ip.html">
+<meta name="twitter:card" content="summary"><link rel="stylesheet" href="style.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "Калькулятор: самозанятый или ИП", "url": "https://kleogeos.github.io/freelancer-tools/kalkulyator-samozanyatyy-ili-ip.html", "applicationCategory": "BusinessApplication", "operatingSystem": "Any (runs in browser)", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "description": "Калькулятор сравнения налога на профессиональный доход (НПД) и ИП на УСН 6% с учётом фиксированных взносов 2026 года и лимита дохода самозанятого."}</script>
+<style>
+table.calc{width:100%;border-collapse:collapse;margin-top:1rem}
+table.calc th,table.calc td{padding:.5rem .6rem;border-bottom:1px solid #eee;text-align:left}
+table.calc th{font-size:.85rem;color:#555}
+.best{color:#1a7a3a;font-weight:700}
+.warn{color:#b35900;font-weight:700}
+label{display:block;margin-top:.8rem;font-size:.9rem;color:#333}
+input[type=number],input[type=range]{width:100%;max-width:260px;padding:.4rem;font-size:1rem;margin-top:.2rem}
+input[type=checkbox]{margin-top:.3rem}
+</style>
+</head><body>
+<nav><a href="index.html">Home</a><a href="samozanyatyy-ili-ip-dlya-frilansera-2026.html">Полный разбор: самозанятый или ИП</a><a href="mozhno-li-samozanyatomu-poluchat-oplatu-v-usdt.html">Самозанятый и USDT</a></nav>
+
+<h1>Калькулятор: самозанятый или ИП</h1>
+<p class="tagline">Введите ожидаемый годовой доход — калькулятор посчитает налог НПД и налог+взносы ИП на УСН «Доходы» по ставкам и фиксированным взносам 2026 года и покажет, что выгоднее именно при вашей сумме. Всё считается в браузере, ничего не отправляется на сервер.</p>
+
+<label>Годовой доход, ₽
+<input type="number" id="income" value="1200000" min="0" step="any"></label>
+
+<label>Доля дохода от компаний/ИП (не от физлиц), %: <span id="b2bVal">80</span>%
+<input type="range" id="b2bShare" value="80" min="0" max="100" step="5"></label>
+
+<label><input type="checkbox" id="cryptoIncome"> Доход (целиком или частично) приходит в USDT/крипте от иностранного клиента</label>
+
+<table class="calc" id="resultTable">
+<thead><tr><th>Режим</th><th>Налог/взносы за год</th><th>Останется на руки, ₽</th></tr></thead>
+<tbody>
+<tr><td>Самозанятый (НПД)</td><td id="out-npd-tax"></td><td id="out-npd-net"></td></tr>
+<tr><td>ИП на УСН «Доходы» 6%</td><td id="out-ip-tax"></td><td id="out-ip-net"></td></tr>
+</tbody>
+</table>
+<p id="best-note" style="margin-top:.6rem;font-size:.9rem;color:#555"></p>
+<p id="limit-note" style="margin-top:.4rem;font-size:.9rem"></p>
+<p id="crypto-note" style="margin-top:.4rem;font-size:.9rem"></p>
+
+<section>
+<h2>Как это считается</h2>
+<ul>
+<li><b>НПД (самозанятый):</b> 4% с дохода от физлиц + 6% с дохода от компаний/ИП, без обязательных взносов. Доступен только до дохода 2,4 млн ₽/год.</li>
+<li><b>ИП на УСН «Доходы»:</b> 6% со всего дохода + фиксированный страховой взнос 57 390 ₽/год (платится независимо от суммы дохода) + 1% с дохода свыше 300 000 ₽/год. Лимита дохода для этого режима нет.</li>
+</ul>
+<p>Это упрощённый расчёт для одиночного фрилансера без сотрудников и без региональных льгот по УСН (в некоторых регионах ставка ниже 6%). Подробный разбор с оговорками, включая отдельный случай оплаты в USDT — в статье <a href="samozanyatyy-ili-ip-dlya-frilansera-2026.html">«Самозанятый или ИП для фрилансера в 2026 году»</a>.</p>
+<p><small>Это ориентировочный расчёт по состоянию на октябрь 2026 года, не налоговая консультация. Перед решением проверьте актуальные ставки и свою ситуацию у бухгалтера или на сайте ФНС.</small></p>
+</section>
+
+<div class="box">Статьи по теме: <a href="samozanyatyy-ili-ip-dlya-frilansera-2026.html">Самозанятый или ИП для фрилансера</a> · <a href="mozhno-li-samozanyatomu-poluchat-oplatu-v-usdt.html">Может ли самозанятый получать оплату в USDT</a>. Калькулятор налога на крипто-доход (US self-employment) для сравнения подхода — <a href="crypto-tax-helper.html">crypto-tax-helper</a>. Готовый чек-лист по выбору режима для крипто-дохода — часть <a href="ru-kit.html">RU Crypto Freelancer Kit</a> (7 USDT).</div>
+
+<footer><a href="index.html">← Все бесплатные инструменты</a>
+<p style="text-align:center;opacity:.5;font-size:.8rem"><img src="https://visitor-badge.laobi.icu/badge?page_id=kleogeos.freelancer-tools.kalkulyator-samozanyatyy-ili-ip" alt="page views"></p>
+</footer>
+
+<script>
+function fmt(n){ return Math.round(n).toLocaleString('ru-RU', {maximumFractionDigits: 0}); }
+const NPD_LIMIT = 2400000;
+const IP_FIXED = 57390;
+function calc(){
+  const income = parseFloat(document.getElementById('income').value) || 0;
+  const b2bShare = parseFloat(document.getElementById('b2bShare').value) || 0;
+  document.getElementById('b2bVal').textContent = b2bShare;
+  const cryptoIncome = document.getElementById('cryptoIncome').checked;
+
+  const b2bPart = income * (b2bShare / 100);
+  const b2cPart = income - b2bPart;
+  const npdTax = b2bPart * 0.06 + b2cPart * 0.04;
+  const npdNet = income - npdTax;
+
+  const ipTax = income * 0.06 + IP_FIXED + Math.max(0, income - 300000) * 0.01;
+  const ipNet = income - ipTax;
+
+  const npdAvailable = income <= NPD_LIMIT;
+
+  document.getElementById('out-npd-tax').textContent = npdAvailable ? fmt(npdTax) + ' ₽' : '—';
+  document.getElementById('out-npd-net').textContent = npdAvailable ? fmt(npdNet) + ' ₽' : 'недоступно';
+  document.getElementById('out-ip-tax').textContent = fmt(ipTax) + ' ₽';
+  document.getElementById('out-ip-net').textContent = fmt(ipNet) + ' ₽';
+
+  const limitNote = document.getElementById('limit-note');
+  if (!npdAvailable) {
+    limitNote.innerHTML = '<span class="warn">Доход выше лимита НПД (2,4 млн ₽/год) — самозанятость для этой суммы недоступна, только ИП.</span>';
+  } else {
+    limitNote.textContent = '';
+  }
+
+  const bestNote = document.getElementById('best-note');
+  if (income > 0) {
+    if (!npdAvailable) {
+      bestNote.innerHTML = `При этом доходе доступен только ИП: на руки останется ${fmt(ipNet)} ₽.`;
+    } else if (npdNet >= ipNet) {
+      bestNote.innerHTML = `При этих цифрах выгоднее самозанятость: на руки ${fmt(npdNet)} ₽ против ${fmt(ipNet)} ₽ у ИП — разница ${fmt(npdNet-ipNet)} ₽.`;
+    } else {
+      bestNote.innerHTML = `При этих цифрах выгоднее ИП: на руки ${fmt(ipNet)} ₽ против ${fmt(npdNet)} ₽ у самозанятого — разница ${fmt(ipNet-npdNet)} ₽.`;
+    }
+  } else {
+    bestNote.textContent = '';
+  }
+
+  const cryptoNote = document.getElementById('crypto-note');
+  cryptoNote.innerHTML = cryptoIncome
+    ? '<span class="warn">Оплата в USDT от иностранного клиента на НПД — серая правовая зона с 418-ФЗ (с 2025), см. <a href="mozhno-li-samozanyatomu-poluchat-oplatu-v-usdt.html">разбор</a>. Цифры налога НПД выше показаны формально по ставке, но для регулярного крипто-дохода предсказуемость ИП может быть важнее разницы в налоге.</span>'
+    : '';
+}
+['income','b2bShare','cryptoIncome'].forEach(id => document.getElementById(id).addEventListener('input', calc));
+calc();
+</script>
+</body></html>
